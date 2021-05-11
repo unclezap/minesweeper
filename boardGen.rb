@@ -89,6 +89,44 @@ class GameGenerator
         return board
     end
     
+    def self.tile_number_generator1aab(board, width, length)
+        count_hash = {
+            0 => 0,
+            1 => 0,
+            2 => 0,
+            3 => 0,
+            4 => 0,
+            5 => 0,
+            6 => 0,
+            7 => 0,
+            8 => 0,
+            Infinity => 1
+        }
+
+        y_pos = 1
+        width.times do
+            x_pos = 0
+
+            column1 = count_hash[board[y_pos-1][x_pos-1]] + count_hash[board[y_pos][x_pos-1]] + count_hash[board[y_pos+1][x_pos-1]]
+            column2 = count_hash[board[y_pos-1][x_pos]] + count_hash[board[y_pos][x_pos]] + count_hash[board[y_pos+1][x_pos]]
+            column3 = count_hash[board[y_pos-1][x_pos+1]] + count_hash[board[y_pos][x_pos+1]] + count_hash[board[y_pos+1][x_pos+1]]
+            
+            length.times do
+                x_pos += 1
+
+                column1 = column2
+                column2 = column3
+                column3 = count_hash[board[y_pos-1][x_pos+1]] + count_hash[board[y_pos][x_pos+1]] + count_hash[board[y_pos+1][x_pos+1]]
+                if board[y_pos][x_pos] != Infinity
+                    board[y_pos][x_pos] = column1 + column2 + column3 - count_hash[board[y_pos][x_pos]]
+                end
+            end
+            y_pos += 1
+        end
+
+        return board
+    end
+
     def self.tile_number_generator1aaa(board, width, length)
         count_hash = {
             0 => 0,
@@ -346,6 +384,35 @@ class GameGenerator
         return board
     end
 
+    def self.board_generator2bbb2(width, length, mines)
+        ref_array = self.ref_array_generator(width, length, mines).shuffle
+        board = []
+        count = 0
+        row = -1
+        area = width * length
+
+        while count < area do
+            if count % length == 0
+                board.push([0,ref_array.pop(),0])
+                row += 1
+            else
+                board[row].insert(1,ref_array.pop())
+            end
+            count += 1
+        end
+
+        border = [0,0]
+        length.times do
+            border.push(0)
+        end
+        board.unshift(border)
+        board.push(border)
+
+        board = self.border_slicer(self.tile_number_generator1aab(board, width, length))
+
+        return board
+    end
+
     def self.board_generator2bbbb(width, length, mines)
         ref_array = self.ref_array_generator(width, length, mines).shuffle
         board = []
@@ -389,6 +456,7 @@ end
 #   end
 # }
 
+pp GameGenerator.board_generator2bbb2(4,6,8)
 Benchmark.bm do |benchmark|
     # benchmark.report("Gen 1a") do
     #     10000.times do
@@ -420,19 +488,25 @@ Benchmark.bm do |benchmark|
         end
     end
 
-    benchmark.report("DP method 10 times") do
+    benchmark.report("box method 10 times") do
         10.times do
             GameGenerator.board_generator2bb(16,30,99)
         end
     end
 
-    benchmark.report("DP method no funct call 10 times") do
+    benchmark.report("box method no funct call 10 times") do
         10.times do
             GameGenerator.board_generator2bbb(16,30,99)
         end
     end
 
-    benchmark.report("if method") do
+    benchmark.report("DP method 10 times") do
+        10.times do
+            GameGenerator.board_generator2bbb2(16,30,99)
+        end
+    end
+
+    benchmark.report("if method 10 times") do
         10.times do
             GameGenerator.board_generator2bbbb(16,30,99)
         end
@@ -444,15 +518,21 @@ Benchmark.bm do |benchmark|
         end
     end
 
-    benchmark.report("DP method") do
+    benchmark.report("box method") do
         10000.times do
             GameGenerator.board_generator2bb(16,30,99)
         end
     end
 
-    benchmark.report("DP method no funct ca,l") do
+    benchmark.report("box method no funct call") do
         10000.times do
             GameGenerator.board_generator2bbb(16,30,99)
+        end
+    end
+
+    benchmark.report("DP method") do
+        10000.times do
+            GameGenerator.board_generator2bbb2(16,30,99)
         end
     end
 
@@ -468,19 +548,25 @@ Benchmark.bm do |benchmark|
         end
     end
 
-    benchmark.report("DP method x 2") do
+    benchmark.report("box method x 2") do
         10000.times do
             GameGenerator.board_generator2bb(32,30,198)
         end
     end
 
-    benchmark.report("DP method x 2 no funct call") do
+    benchmark.report("box method x 2 no funct call") do
         10000.times do
             GameGenerator.board_generator2bbb(32,30,198)
         end
     end
 
-    benchmark.report("if method") do
+    benchmark.report("DP method x 2") do
+        10000.times do
+            GameGenerator.board_generator2bbb2(32,30,198)
+        end
+    end
+
+    benchmark.report("if method x 2") do
         10000.times do
             GameGenerator.board_generator2bbb(32,30,198)
         end
