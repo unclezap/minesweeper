@@ -456,79 +456,124 @@ end
 #   end
 # }
 
-pp GameGenerator.board_generator2bbb2(4,6,8)
-Benchmark.bm do |benchmark|
-    # benchmark.report("Gen 1a") do
-    #     10000.times do
-    #         GameGenerator.board_generator1a(16,30,99)
-    #     end
-    # end
+# pp GameGenerator.board_generator2bbb2(4,6,8)
+# Benchmark.bm do |benchmark|
+#     # benchmark.report("Gen 1a") do
+#     #     10000.times do
+#     #         GameGenerator.board_generator1a(16,30,99)
+#     #     end
+#     # end
 
-    # benchmark.report("Gen 1b") do
-    #     10000.times do
-    #         GameGenerator.board_generator1b(16,30,99)
-    #     end
-    # end
+#     # benchmark.report("Gen 1b") do
+#     #     10000.times do
+#     #         GameGenerator.board_generator1b(16,30,99)
+#     #     end
+#     # end
   
-# Gen 2 is faster and has better Big O time
-    # benchmark.report("Gen 2a") do
-    #     10000.times do
-    #         GameGenerator.board_generator2a(16,30,00)
-    #     end
-    # end
+# # Gen 2 is faster and has better Big O time
+#     # benchmark.report("Gen 2a") do
+#     #     10000.times do
+#     #         GameGenerator.board_generator2a(16,30,00)
+#     #     end
+#     # end
 
-    # benchmark.report("Gen 2b") do
-    #     10000.times do
-    #         GameGenerator.board_generator2b(16,30,00)
-    #     end
-    # end
-    benchmark.report("zeb method 10 times") do
-        10.times do
-            GameGenerator.board_generator2b(16,30,99)
-        end
-    end
+#     # benchmark.report("Gen 2b") do
+#     #     10000.times do
+#     #         GameGenerator.board_generator2b(16,30,00)
+#     #     end
+#     # end
+#     benchmark.report("zeb method 10 times") do
+#         10.times do
+#             GameGenerator.board_generator2b(16,30,99)
+#         end
+#     end
 
-    benchmark.report("box method 10 times") do
-        10.times do
-            GameGenerator.board_generator2bb(16,30,99)
-        end
-    end
+#     benchmark.report("box method 10 times") do
+#         10.times do
+#             GameGenerator.board_generator2bb(16,30,99)
+#         end
+#     end
 
-    benchmark.report("box method no funct call 10 times") do
-        10.times do
-            GameGenerator.board_generator2bbb(16,30,99)
-        end
-    end
+#     benchmark.report("box method no funct call 10 times") do
+#         10.times do
+#             GameGenerator.board_generator2bbb(16,30,99)
+#         end
+#     end
 
-    benchmark.report("DP method 10 times") do
-        10.times do
-            GameGenerator.board_generator2bbb2(16,30,99)
-        end
-    end
+#     benchmark.report("DP method 10 times") do
+#         10.times do
+#             GameGenerator.board_generator2bbb2(16,30,99)
+#         end
+#     end
 
-    benchmark.report("if method 10 times") do
-        10.times do
-            GameGenerator.board_generator2bbbb(16,30,99)
-        end
-    end
+#     benchmark.report("if method 10 times") do
+#         10.times do
+#             GameGenerator.board_generator2bbbb(16,30,99)
+#         end
+#     end
 
-    benchmark.report("zeb method") do
-        10000.times do
-            GameGenerator.board_generator2b(16,30,99)
-        end
-    end
+#     benchmark.report("zeb method") do
+#         10000.times do
+#             GameGenerator.board_generator2b(16,30,99)
+#         end
+#     end
 
-    benchmark.report("box method") do
-        10000.times do
-            GameGenerator.board_generator2bb(16,30,99)
-        end
-    end
+#     benchmark.report("box method") do
+#         10000.times do
+#             GameGenerator.board_generator2bb(16,30,99)
+#         end
+#     end
 
-    benchmark.report("box method no funct call") do
-        10000.times do
-            GameGenerator.board_generator2bbb(16,30,99)
-        end
-    end
+#     benchmark.report("box method no funct call") do
+#         10000.times do
+#             GameGenerator.board_generator2bbb(16,30,99)
+#         end
+#     end
+
+#     benchmark.report("DP method") do
+#         10000.times do
+#             GameGenerator.board_generator2bbb2(16,30,99)
+#         end
+#     end
+
+#     benchmark.report("if method") do
+#         10000.times do
+#             GameGenerator.board_generator2bbb(16,30,99)
+#         end
+#     end
+
+#     benchmark.report("zeb method x 2") do
+#         10000.times do
+#             GameGenerator.board_generator2b(32,30,198)
+#         end
+#     end
+
+#     benchmark.report("box method x 2") do
+#         10000.times do
+#             GameGenerator.board_generator2bb(32,30,198)
+#         end
+#     end
+
+#     benchmark.report("box method x 2 no funct call") do
+#         10000.times do
+#             GameGenerator.board_generator2bbb(32,30,198)
+#         end
+#     end
+
+#     benchmark.report("DP method x 2") do
+#         10000.times do
+#             GameGenerator.board_generator2bbb2(32,30,198)
+#         end
+#     end
+
+#     benchmark.report("if method x 2") do
+#         10000.times do
+#             GameGenerator.board_generator2bbb(32,30,198)
+#         end
+#     end
+# end
+
+Benchmark.bm do |benchmark|
 
     benchmark.report("DP method") do
         10000.times do
@@ -542,23 +587,26 @@ Benchmark.bm do |benchmark|
         end
     end
 
-    benchmark.report("zeb method x 2") do
+    benchmark.report("box method no funct call") do
         10000.times do
-            GameGenerator.board_generator2b(32,30,198)
+            GameGenerator.board_generator2bbb(16,30,99)
         end
     end
 
-    benchmark.report("box method x 2") do
+
+    benchmark.report("box method") do
         10000.times do
-            GameGenerator.board_generator2bb(32,30,198)
+            GameGenerator.board_generator2bb(16,30,99)
+        end
+    end
+    
+    benchmark.report("zeb method") do
+        10000.times do
+            GameGenerator.board_generator2b(16,30,99)
         end
     end
 
-    benchmark.report("box method x 2 no funct call") do
-        10000.times do
-            GameGenerator.board_generator2bbb(32,30,198)
-        end
-    end
+    
 
     benchmark.report("DP method x 2") do
         10000.times do
@@ -571,4 +619,24 @@ Benchmark.bm do |benchmark|
             GameGenerator.board_generator2bbb(32,30,198)
         end
     end
+
+    benchmark.report("box method x 2 no funct call") do
+        10000.times do
+            GameGenerator.board_generator2bbb(32,30,198)
+        end
+    end
+
+    benchmark.report("box method x 2") do
+        10000.times do
+            GameGenerator.board_generator2bb(32,30,198)
+        end
+    end
+
+    benchmark.report("zeb method x 2") do
+        10000.times do
+            GameGenerator.board_generator2b(32,30,198)
+        end
+    end
+
+
 end
