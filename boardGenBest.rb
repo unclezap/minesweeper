@@ -50,7 +50,8 @@ class GameGenerator
                 column3 = count_hash[board[y_pos-1][x_pos+1]] + count_hash[board[y_pos][x_pos+1]] + count_hash[board[y_pos+1][x_pos+1]]
                 if board[y_pos][x_pos] != 'M'
                     #test if count_hash for center tile can be removed since it wouldn't add in anyway
-                    board[y_pos][x_pos] = column1 + column2 + column3 - count_hash[board[y_pos][x_pos]]
+                    board[y_pos][x_pos] = column1 + column2 + column3
+                    # board[y_pos][x_pos] = column1 + column2 + column3 - count_hash[board[y_pos][x_pos]]
                 end
             end
             y_pos += 1
