@@ -56,6 +56,94 @@ class GameGenerator
         return board
     end
 
+    def self.tile_number_generator1aa(board, width, length)
+        count_hash = {
+            0 => 0,
+            1 => 0,
+            2 => 0,
+            3 => 0,
+            4 => 0,
+            5 => 0,
+            6 => 0,
+            7 => 0,
+            8 => 0,
+            Infinity => 1
+        }
+
+        y_pos = 0
+        width.times do
+            y_pos += 1
+            x_pos = 0
+            length.times do
+                x_pos += 1
+                if board[y_pos][x_pos] != Infinity
+                    column1 = count_hash[board[y_pos-1][x_pos-1]] + count_hash[board[y_pos][x_pos-1]] + count_hash[board[y_pos+1][x_pos-1]]
+                    column2 = count_hash[board[y_pos-1][x_pos]] + count_hash[board[y_pos+1][x_pos]]
+                    column3 = count_hash[board[y_pos-1][x_pos+1]] + count_hash[board[y_pos][x_pos+1]] + count_hash[board[y_pos+1][x_pos+1]]
+
+                    board[y_pos][x_pos] = column1 + column2 + column3
+                end
+            end
+        end
+
+        return board
+    end
+    
+    def self.tile_number_generator1aaa(board, width, length)
+        count_hash = {
+            0 => 0,
+            1 => 0,
+            2 => 0,
+            3 => 0,
+            4 => 0,
+            5 => 0,
+            6 => 0,
+            7 => 0,
+            8 => 0,
+            Infinity => 1
+        }
+
+        y_pos = 0
+        width.times do
+            y_pos += 1
+            x_pos = 0
+            length.times do
+                x_pos += 1
+                if board[y_pos][x_pos] != Infinity
+                    sum = 0
+                    if board[y_pos-1][x_pos-1] == Infinity
+                        sum += 1
+                    end
+                    if board[y_pos][x_pos-1] == Infinity
+                        sum += 1
+                    end
+                    if board[y_pos+1][x_pos-1] == Infinity
+                        sum += 1
+                    end
+                    if board[y_pos-1][x_pos] == Infinity
+                        sum += 1
+                    end
+                    if board[y_pos+1][x_pos] == Infinity
+                        sum += 1
+                    end
+                    if board[y_pos-1][x_pos+1] == Infinity
+                        sum += 1
+                    end
+                    if board[y_pos][x_pos+1] == Infinity
+                        sum += 1
+                    end
+                    if board[y_pos+1][x_pos+1] == Infinity
+                        sum += 1
+                    end
+
+                    board[y_pos][x_pos] = sum
+                end
+            end
+        end
+
+        return board
+    end
+
     def self.tile_number_generator1b(board, width, length)
         y_pos = 0
 
@@ -228,6 +316,64 @@ class GameGenerator
 
         return board
     end
+
+    def self.board_generator2bbb(width, length, mines)
+        ref_array = self.ref_array_generator(width, length, mines).shuffle
+        board = []
+        count = 0
+        row = -1
+        area = width * length
+
+        while count < area do
+            if count % length == 0
+                board.push([0,ref_array.pop(),0])
+                row += 1
+            else
+                board[row].insert(1,ref_array.pop())
+            end
+            count += 1
+        end
+
+        border = [0,0]
+        length.times do
+            border.push(0)
+        end
+        board.unshift(border)
+        board.push(border)
+
+        board = self.border_slicer(self.tile_number_generator1aa(board, width, length))
+
+        return board
+    end
+
+    def self.board_generator2bbbb(width, length, mines)
+        ref_array = self.ref_array_generator(width, length, mines).shuffle
+        board = []
+        count = 0
+        row = -1
+        area = width * length
+
+        while count < area do
+            if count % length == 0
+                board.push([0,ref_array.pop(),0])
+                row += 1
+            else
+                board[row].insert(1,ref_array.pop())
+            end
+            count += 1
+        end
+
+        border = [0,0]
+        length.times do
+            border.push(0)
+        end
+        board.unshift(border)
+        board.push(border)
+
+        board = self.border_slicer(self.tile_number_generator1aaa(board, width, length))
+
+        return board
+    end
 end
 # puts "======"
 # puts "======"
@@ -235,6 +381,7 @@ end
 # pp GameGenerator.board_generator2b(4,4,5)
 # puts "~~~~~~~~~"
 # pp GameGenerator.board_generator2bb(4,4,5)
+# pp GameGenerator.board_generator2bbbb(2,3,3)
 
 # puts Benchmark.measure {
 #   50000.times do
@@ -279,6 +426,18 @@ Benchmark.bm do |benchmark|
         end
     end
 
+    benchmark.report("DP method no funct call 10 times") do
+        10.times do
+            GameGenerator.board_generator2bbb(16,30,99)
+        end
+    end
+
+    benchmark.report("if method") do
+        10.times do
+            GameGenerator.board_generator2bbbb(16,30,99)
+        end
+    end
+
     benchmark.report("zeb method") do
         10000.times do
             GameGenerator.board_generator2b(16,30,99)
@@ -291,6 +450,18 @@ Benchmark.bm do |benchmark|
         end
     end
 
+    benchmark.report("DP method no funct ca,l") do
+        10000.times do
+            GameGenerator.board_generator2bbb(16,30,99)
+        end
+    end
+
+    benchmark.report("if method") do
+        10000.times do
+            GameGenerator.board_generator2bbb(16,30,99)
+        end
+    end
+
     benchmark.report("zeb method x 2") do
         10000.times do
             GameGenerator.board_generator2b(32,30,198)
@@ -300,6 +471,18 @@ Benchmark.bm do |benchmark|
     benchmark.report("DP method x 2") do
         10000.times do
             GameGenerator.board_generator2bb(32,30,198)
+        end
+    end
+
+    benchmark.report("DP method x 2 no funct call") do
+        10000.times do
+            GameGenerator.board_generator2bbb(32,30,198)
+        end
+    end
+
+    benchmark.report("if method") do
+        10000.times do
+            GameGenerator.board_generator2bbb(32,30,198)
         end
     end
 end
