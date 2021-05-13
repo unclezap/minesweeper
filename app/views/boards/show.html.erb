@@ -10,9 +10,13 @@
 </p>
 
 <br>
-<br>
-<br>
 
+<%= link_to boards_path do %>
+  <% image_tag "unclicked_tile_shaded.png" %>
+<% end %>
+
+<br>
+<br>
 <% @game_board.each do |row|%>
   <br>
   <% row.each do |tile|%>
