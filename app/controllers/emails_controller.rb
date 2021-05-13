@@ -29,19 +29,16 @@ class EmailsController < ApplicationController
   def create
     # params[:email][:address]
     @email = Email.new(email_params)
-    binding.pry
 
     respond_to do |format|
       if @email.save
         @board = @email.boards.last
         @board.seed = rand(-9223372036854775808..9223372036854775807)
         @board.save
-        binding.pry
         format.html { redirect_to @email, notice: "Email was successfully created." }
         format.json { render :show, status: :created, location: @email }
       else
-        binding.pry
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new,  status: :unprocessable_entity }
         format.json { render json: @email.errors, status: :unprocessable_entity }
       end
     end

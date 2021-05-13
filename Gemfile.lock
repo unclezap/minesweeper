@@ -75,6 +75,8 @@ GEM
     coderay (1.1.2)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
+    email_validator (2.2.3)
+      activemodel
     erubi (1.10.0)
     ffi (1.15.0)
     globalid (0.4.2)
@@ -205,6 +207,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
+  email_validator
   jbuilder (~> 2.7)
   listen (~> 3.2)
   pry
