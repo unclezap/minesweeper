@@ -8,6 +8,7 @@ class BoardsController < ApplicationController
 
   # GET /boards/1 or /boards/1.json
   def show
+    @game_board = @board.board_generator
   end
 
   # GET /boards/new

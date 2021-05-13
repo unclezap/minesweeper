@@ -35,7 +35,7 @@ class EmailsController < ApplicationController
         @board = @email.boards.last
         @board.seed = rand(-9223372036854775808..9223372036854775807)
         @board.save
-        format.html { redirect_to @email, notice: "Email was successfully created." }
+        format.html { redirect_to @board, notice: "Board was successfully created." }
         format.json { render :show, status: :created, location: @email }
       else
         format.html { render :new,  status: :unprocessable_entity }

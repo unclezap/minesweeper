@@ -1,28 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Width:</strong>
-  <%= @board.width %>
-</p>
-
-<p>
-  <strong>Height:</strong>
-  <%= @board.height %>
-</p>
-
-<p>
-  <strong>Num mines:</strong>
-  <%= @board.num_mines %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @board.name %>
-</p>
-
-<p>
-  <strong>Url:</strong>
-  <%= @board.url %>
+  <strong><%= @board.name %></strong>
 </p>
 
 <p>
@@ -30,10 +9,38 @@
   <%= @board.email_id %>
 </p>
 
-<p>
-  <strong>Seed:</strong>
-  <%= @board.seed %>
-</p>
+<br>
+<br>
+<br>
 
-<%= link_to 'Edit', edit_board_path(@board) %> |
-<%= link_to 'Back', boards_path %>
+<% @game_board.each do |row|%>
+  <br>
+  <% row.each do |tile|%>
+    <% case tile %>
+      <% when 0 %>
+        <%= image_tag "clicked_tile_0.png", class: "img-responsive"%>
+      <% when 1 %>
+        <%= image_tag "clicked_tile_1.png", class: "img-responsive"%>
+      <% when 2 %>
+        <%= image_tag "clicked_tile_2.png", class: "img-responsive"%>
+      <% when 3 %>
+        <%= image_tag "clicked_tile_3.png", class: "img-responsive"%>
+      <% when 4 %>
+        <%= image_tag "clicked_tile_4.png", class: "img-responsive"%>
+      <% when 5 %>
+        <%= image_tag "clicked_tile_5.png", class: "img-responsive"%>
+      <% when 6 %>
+        <%= image_tag "clicked_tile_6.png", class: "img-responsive"%>
+      <% when 7 %>
+        <%= image_tag "clicked_tile_0.png", class: "img-responsive"%>
+      <% when 8 %>
+        <%= image_tag "clicked_tile_0.png", class: "img-responsive"%>
+      <% else %>
+      <%= image_tag "mine.png", class: "img-responsive"%>
+    <% end %>
+  <% end %>
+<% end %>
+
+<br>
+<br>
+<%= link_to 'All Boards', boards_path %>

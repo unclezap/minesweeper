@@ -1,16 +1,18 @@
 class Board < ApplicationRecord
     belongs_to :email
 
+    # replace width with height
+    # replace length with width
     #Creates an array of tiles with mines randomly distributed that will be transformed into the game board
     #Mines are represented by 9s
-    def self.ref_array_generator(width, length, mines)
+    def ref_array_generator
         ref_array = []
             
-        mines.times do
+        self.num_mines.times do
             ref_array.push(9)
         end
             
-        (width * length - mines).times do
+        (self.height * self.width - self.num_mines).times do
             ref_array.push(0)
         end
     
@@ -20,7 +22,7 @@ class Board < ApplicationRecord
     #Uses a dynamic programming method to quickly calculate the values for non-mine tiles
     #Creates a 3x3 box around a tile and calculates the number of bombs in each column
     #Each time you go to the next tile the box is shifted over
-    def self.tile_number_generator(board, width, length)
+    def tile_number_generator(board)
         count_hash = {
             0 => 0,
             1 => 0,
@@ -35,14 +37,14 @@ class Board < ApplicationRecord
         }
     
         y_pos = 1
-        width.times do
+        self.height.times do
             x_pos = 0
     
             column1 = count_hash[board[y_pos-1][x_pos-1]] + count_hash[board[y_pos][x_pos-1]] + count_hash[board[y_pos+1][x_pos-1]]
             column2 = count_hash[board[y_pos-1][x_pos]] + count_hash[board[y_pos][x_pos]] + count_hash[board[y_pos+1][x_pos]]
             column3 = count_hash[board[y_pos-1][x_pos+1]] + count_hash[board[y_pos][x_pos+1]] + count_hash[board[y_pos+1][x_pos+1]]
                 
-            length.times do
+            self.width.times do
                 x_pos += 1
     
                 column1 = column2
@@ -60,12 +62,12 @@ class Board < ApplicationRecord
     
     #board is created with an empty border around it to avoid errors when accessing non-existent array values
     #removing border leaves just the game board values
-    def self.border_slicer(board)
+    def border_slicer(board)
         board.pop()
         board.shift()
     
         row = 0
-        while row < board.length do
+        while row < self.height do
             board[row].pop()
             board[row].shift()
             row += 1
@@ -75,15 +77,15 @@ class Board < ApplicationRecord
     end
     
     #creates a game board based off of the reference array, then calculates tile values and slices off the border
-    def self.board_generator(width, length, mines, seed)
-        ref_array = self.ref_array_generator(width, length, mines).shuffle(random: Random.new(seed))
+    def board_generator
+        ref_array = ref_array_generator().shuffle(random: Random.new(self.seed))
         board = []
         count = 0
         row = -1
-        area = width * length
+        area = self.height * self.width
     
         while count < area do
-            if count % length == 0
+            if count % self.width == 0
                 board.push([0,ref_array.pop(),0])
                 row += 1
             else
@@ -93,13 +95,13 @@ class Board < ApplicationRecord
         end
     
         border = [0,0]
-        length.times do
+        self.width.times do
             border.push(0)
         end
         board.unshift(border)
         board.push(border)
-    
-        board = self.border_slicer(self.tile_number_generator(board, width, length))
+
+        board = border_slicer(tile_number_generator(board))
     
         return board
     end
