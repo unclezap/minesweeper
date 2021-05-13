@@ -1,6 +1,11 @@
 class EmailsController < ApplicationController
   before_action :set_email, only: %i[ show edit update destroy ]
 
+  def generate
+    @sign_up
+    binding.pry
+  end
+
   # GET /emails or /emails.json
   def index
     @emails = Email.all
@@ -13,6 +18,7 @@ class EmailsController < ApplicationController
   # GET /emails/new
   def new
     @email = Email.new
+    @email.boards.build
   end
 
   # GET /emails/1/edit
@@ -21,7 +27,11 @@ class EmailsController < ApplicationController
 
   # POST /emails or /emails.json
   def create
+    binding.pry
+    # params[:email][:address]
     @email = Email.new(email_params)
+    @board = @email.boards.last
+    binding.pry
 
     respond_to do |format|
       if @email.save
@@ -64,6 +74,6 @@ class EmailsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def email_params
-      params.require(:email).permit(:address)
+      params.require(:email).permit(:address, boards_attributes: [:width, :height, :num_mines, :name])
     end
 end
