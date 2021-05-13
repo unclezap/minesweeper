@@ -30,6 +30,7 @@
       <th>Width</th>
       <th>Height</th>
       <th>Mines</th>
+      <th>Created At:</th>
       <th>Name</th>
       <th colspan="3"></th>
     </tr>
@@ -42,8 +43,12 @@
         <td><%= board.width %></td>
         <td><%= board.height %></td>
         <td><%= board.num_mines %></td>
+        <td><%= board.created_at %></td>
         <td><%= link_to board.name, board %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<br>
+<%= link_to 'View all generated boards', boards_path %>
