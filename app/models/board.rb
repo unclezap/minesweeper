@@ -1,6 +1,8 @@
 class Board < ApplicationRecord
     belongs_to :email
 
+    validates :name, :width, :height, :num_mines, :presence => true
+
     # replace width with height
     # replace length with width
     #Creates an array of tiles with mines randomly distributed that will be transformed into the game board
@@ -104,5 +106,14 @@ class Board < ApplicationRecord
         board = border_slicer(tile_number_generator(board))
     
         return board
+    end
+
+    private
+
+    def mine_maximum
+        binding.pry
+        if num_mines > width * height
+            errors.add(:num_mines, "too many mines")
+        end
     end
 end

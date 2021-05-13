@@ -17,6 +17,7 @@ class EmailsController < ApplicationController
 
   # GET /emails/new
   def new
+    @boards = Board.all
     @email = Email.new
     @email.boards.build
   end
@@ -27,9 +28,7 @@ class EmailsController < ApplicationController
 
   # POST /emails or /emails.json
   def create
-    # params[:email][:address]
     @email = Email.new(email_params)
-
     respond_to do |format|
       if @email.save
         @board = @email.boards.last
@@ -38,6 +37,7 @@ class EmailsController < ApplicationController
         format.html { redirect_to @board, notice: "Board was successfully created." }
         format.json { render :show, status: :created, location: @email }
       else
+        @boards = Board.all
         format.html { render :new,  status: :unprocessable_entity }
         format.json { render json: @email.errors, status: :unprocessable_entity }
       end

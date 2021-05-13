@@ -1,21 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong><%= @board.name %></strong>
+  <strong>Board Name: <%= @board.name %></strong>
 </p>
 
 <p>
-  <strong>Email:</strong>
-  <%= @board.email_id %>
+  Creator's email: <%= @board.email.address %>
 </p>
-
-<br>
-
-<%= link_to boards_path do %>
-  <% image_tag "unclicked_tile_shaded.png" %>
-<% end %>
-
-<br>
 <br>
 <% @game_board.each do |row|%>
   <br>
@@ -46,5 +37,7 @@
 <% end %>
 
 <br>
+<br>
+<%= link_to 'Home', new_email_path %>
 <br>
 <%= link_to 'All Boards', boards_path %>
