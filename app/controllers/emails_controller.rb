@@ -27,17 +27,20 @@ class EmailsController < ApplicationController
 
   # POST /emails or /emails.json
   def create
-    binding.pry
     # params[:email][:address]
     @email = Email.new(email_params)
-    @board = @email.boards.last
     binding.pry
 
     respond_to do |format|
       if @email.save
+        @board = @email.boards.last
+        @board.seed = rand(-9223372036854775808..9223372036854775807)
+        @board.save
+        binding.pry
         format.html { redirect_to @email, notice: "Email was successfully created." }
         format.json { render :show, status: :created, location: @email }
       else
+        binding.pry
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @email.errors, status: :unprocessable_entity }
       end
@@ -74,6 +77,6 @@ class EmailsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def email_params
-      params.require(:email).permit(:address, boards_attributes: [:width, :height, :num_mines, :name])
+      params.require(:email).permit(:address, boards_attributes: [:width, :height, :num_mines, :name, :seed])
     end
 end

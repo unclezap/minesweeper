@@ -75,8 +75,8 @@ class Board < ApplicationRecord
     end
     
     #creates a game board based off of the reference array, then calculates tile values and slices off the border
-    def self.board_generator(width, length, mines)
-        ref_array = self.ref_array_generator(width, length, mines).shuffle
+    def self.board_generator(width, length, mines, seed)
+        ref_array = self.ref_array_generator(width, length, mines).shuffle(random: Random.new(seed))
         board = []
         count = 0
         row = -1

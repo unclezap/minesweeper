@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_12_081312) do
+ActiveRecord::Schema.define(version: 2021_05_13_073524) do
 
   create_table "boards", force: :cascade do |t|
     t.integer "width"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_05_12_081312) do
     t.integer "email_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "seed"
   end
 
   create_table "emails", force: :cascade do |t|
