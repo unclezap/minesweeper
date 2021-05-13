@@ -8,7 +8,8 @@
       <th>Email</th>
       <th>Width</th>
       <th>Height</th>
-      <th>Num mines</th>
+      <th>Mines</th>
+      <th>Created At:</th>
       <th>Name</th>
       <th colspan="3"></th>
     </tr>
@@ -18,12 +19,11 @@
     <% if @boards %>
     <% @boards.each do |board| %>
       <tr>
+        <td><%= board.email.address %></td>
         <td><%= board.width %></td>
         <td><%= board.height %></td>
         <td><%= board.num_mines %></td>
-        <td><%= board.name %></td>
-        <td><%= board.url %></td>
-        <td><%= board.email.address %></td>
+        <td><%= board.created_at %></td>
         <td><%= link_to board.name, board %></td>
       </tr>
     <% end %>
