@@ -2,7 +2,7 @@ minesweeper is a Minesweeper board generation app, created using Rails 2.7.3 and
 
 To run on your local machine:
 
-* Make sure you have installed both Postgres and Ruby (2.7.3 or higher).
+* Make sure you have installed both Postgres and Ruby (2.7.0 or higher).
 
 * Clone this repository.
 
