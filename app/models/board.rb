@@ -1,5 +1,6 @@
 class Board < ApplicationRecord
     belongs_to :email
+    has_many :games
 
     validates :name, :width, :height, :num_mines, :presence => true
 

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :games
   resources :emails
   resources :boards
   root 'emails#new'

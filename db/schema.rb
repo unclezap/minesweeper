@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_13_073524) do
+ActiveRecord::Schema.define(version: 2021_05_14_012602) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "plpgsql"
 
   create_table "boards", force: :cascade do |t|
@@ -29,6 +30,14 @@ ActiveRecord::Schema.define(version: 2021_05_13_073524) do
 
   create_table "emails", force: :cascade do |t|
     t.string "address"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.boolean "won_game"
+    t.integer "board_id"
+    t.hstore "board_state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
