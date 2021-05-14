@@ -1,24 +1,13 @@
-# README
+minesweeper is a Minesweeper board generation app, created using Rails 2.7.3 and PostgreSQL.  The app can be viewed at https://minesweeper-gen.herokuapp.com/ and can also be run on your local Mac machine.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To run on your local machine:
 
-Things you may want to cover:
+* Make sure you have installed both Postgres and Ruby (2.7.3 or higher).
 
-* Ruby version
+* Clone this repository.
 
-* System dependencies
+* Make sure you run bundle install, fire up Postgres, and run rails db:create and rails db:migrate.
 
-* Configuration
+* Once all these steps are completed, the app can be run by firing up a rails server and navigating in a web browser to http://localhost:3000 (or whatever port you choose).
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+At the homepage, users are given the option to create Minesweeper boards and to view recently created boards, as well as access to a page showing all boards created by the app.
