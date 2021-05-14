@@ -4,6 +4,7 @@ class BoardsController < ApplicationController
   # GET /boards or /boards.json
   def index
     @boards = Board.all
+    binding.pry
   end
 
   # GET /boards/1 or /boards/1.json
@@ -65,6 +66,6 @@ class BoardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def board_params
-      params.require(:board).permit(:width, :height, :num_mines, :name, :url, :email_id)
+      params.require(:board).permit(:id, :width, :height, :num_mines, :name, :url, :email_id)
     end
 end

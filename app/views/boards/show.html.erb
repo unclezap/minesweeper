@@ -4,18 +4,24 @@
   <strong>Board Name: <%= @board.name %></strong>
 </p>
 
+<%= link_to boards_path do %>
+  <% image_tag "clicked_tile_0.png" %>
+<% end %>
+
 <p>
   Creator's email: <%= @board.email.address %>
 </p>
 <br>
 <% @game_board.each do |row|%>
   <br>
-  <% row.each do |tile|%>
+  <% row.each do |tile, index|%>
     <% case tile %>
       <% when 0 %>
-        <%= image_tag "clicked_tile_0.png", class: "img-responsive"%>
+          <% image_tag "clicked_tile_0.png", class: "img-responsive" %>
       <% when 1 %>
-        <%= image_tag "clicked_tile_1.png", class: "img-responsive"%>
+        <%= link_to boards_path(:position => [tile, @game_board.find_index(row), row.find_index(tile)]) do %>
+          <% image_tag "clicked_tile_1.png", class: "img-responsive" %>
+        <% end %>
       <% when 2 %>
         <%= image_tag "clicked_tile_2.png", class: "img-responsive"%>
       <% when 3 %>
