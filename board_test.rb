@@ -17,14 +17,37 @@ class Game
 
     # def self.generate_game_state_correct(height, width, mines, ref_array)
 
-    def convert_coord_to_arr(y_pos, x_pos, width) {
+    def click(y_pos, x_pos, width, game_state) {
     # def convert_coord_to_arr(y_pos, x_pos) {
     #     return y_pos * self.board.width + x_pos
-        return y_pos * width + x_pos
+        tile = y_pos * width + x_pos
+
+        if game_state[tile][:num] == 9
+            return "game over"
+        end
+
+        return uncover([tile], game_state)
     }
 
-    def click(position) {
-        
+    # def click(position) {
+    def click(tiles, game_state) {
+        if tiles.empty?
+            return game_state
+        end
+
+        to_click_arr = []
+
+        tiles.each do |tile|
+            game_state[tile][:uncovered] = true
+
+            if game_state[position][:num] == 0
+                game_state[position][:linked_tiles].each do |linked_tile|
+            end
+
+
+    
+    
+        end
     }
 
         # puts ref_array
