@@ -17,48 +17,52 @@ class Game
 
     # def self.generate_game_state_correct(height, width, mines, ref_array)
 
-    def click(y_pos, x_pos, width, game_state) {
+    def self.click(y_pos, x_pos, width, game_state) 
     # def convert_coord_to_arr(y_pos, x_pos) {
     #     return y_pos * self.board.width + x_pos
         tile = y_pos * width + x_pos
+        puts tile
 
         if game_state[tile][:num] == 9
+            game_state[tile][:uncovered] = true
             return "game over"
         end
 
-        return uncover([tile], game_state)
-    }
+        return self.uncover([tile], game_state)
+    end
 
     # def click(position) {
-    def click(tiles, game_state) {
+    def self.uncover(tiles, game_state) 
         if tiles.empty?
             return game_state
         end
 
-        to_click_arr = []
+        to_uncover_arr = []
 
         tiles.each do |tile|
             game_state[tile][:uncovered] = true
 
-            if game_state[position][:num] == 0
-                game_state[position][:linked_tiles].each do |linked_tile|
+            if game_state[tile][:num] == 0
+                game_state[tile][:linked_tiles].each do |linked_tile|
+                    if game_state[linked_tile][:num] != 9 && !game_state[linked_tile][:uncovered]
+                       to_uncover_arr.push(linked_tile) 
+                    end
+                end
             end
-
-
-    
-    
         end
-    }
+
+        uncover(to_uncover_arr, game_state)
+    end
 
         # puts ref_array
     def self.generate_game_state(height, width, mines)
 
         # seed = self.board.seed
-        seed = Random.new_seed
-        # seed = 3
+        # seed = Random.new_seed
+        seed = 3
         ref_array = self.generate_ref_array(height, width, mines).shuffle(random: Random.new(seed))
         # puts "hash bois"
-        # pp ref_array
+        pp ref_array
 
         game_state = {}
 
@@ -541,7 +545,8 @@ end
 
 # pp GameGenerator.board_generator_show_random_seed(4,6,6)
 
-# x = Game.generate_game_state(4,6,6)
+game_state = Game.generate_game_state(4,6,4)
+pp game_state
 # y = Game.generate_hash_nums(4,6,6)
 
 # pp game_state
@@ -554,91 +559,103 @@ end
 #     i += 1
 # end
 
-# x = 0
-# while x < 24
-#     puts "#{x}: #{game_state[x][:num]}"
-#     x += 1
-# end
+i = 0
+while i < 24
+    puts "#{i}: #{game_state[i][:num]}"
+    i += 1
+end
+
+puts '========='
+
+pp Game.click(3,0,6, game_state)
+
+i = 0
+while i<24
+    if game_state[i][:uncovered]
+        puts i
+    end
+    i += 1
+end
 # pp Game.generate_game_state(3,2,2,GameGenerator.board_generator_show_random_seed(3,2,2)[1])
 
 
-Benchmark.bm do |benchmark|
+# Benchmark.bm do |benchmark|
 
-    benchmark.report("10 times reg") do
-        10.times do
-            GameGenerator.board_generator_show_random_seed(16,30,99)
-        end
-    end
+#     benchmark.report("10 times reg") do
+#         10.times do
+#             GameGenerator.board_generator_show_random_seed(16,30,99)
+#         end
+#     end
 
-    benchmark.report("10 times hash crystal") do
-        10.times do
-            Game.generate_game_state(16,30,99)
-        end
-    end
+#     benchmark.report("10 times hash crystal") do
+#         10.times do
+#             Game.generate_game_state(16,30,99)
+#         end
+#     end
 
-    benchmark.report("10 times just hash") do
-        10.times do
-            Game.generate_hash_nums(16,30,99)
-        end
-    end
+#     benchmark.report("10 times just hash") do
+#         10.times do
+#             Game.generate_hash_nums(16,30,99)
+#         end
+#     end
 
-    puts '==============='
+#     puts '==============='
 
-    benchmark.report("30k times reg") do
-        30000.times do
-            GameGenerator.board_generator_show_random_seed(16,30,99)
-        end
-    end
+#     benchmark.report("30k times reg") do
+#         30000.times do
+#             GameGenerator.board_generator_show_random_seed(16,30,99)
+#         end
+#     end
 
-    benchmark.report("30k hash crystal") do
-        30000.times do
-            Game.generate_game_state(16,30,99)
-        end
-    end
+#     benchmark.report("30k hash crystal") do
+#         30000.times do
+#             Game.generate_game_state(16,30,99)
+#         end
+#     end
 
-    benchmark.report("30k just hash") do
-        30000.times do
-            Game.generate_hash_nums(16,30,99)
-        end
-    end
+#     benchmark.report("30k just hash") do
+#         30000.times do
+#             Game.generate_hash_nums(16,30,99)
+#         end
+#     end
 
-    puts '==============='
+#     puts '==============='
 
-    benchmark.report("30k times, double size board reg") do
-        30000.times do
-            GameGenerator.board_generator_show_random_seed(32,30,198)
-        end
-    end
+#     benchmark.report("30k times, double size board reg") do
+#         30000.times do
+#             GameGenerator.board_generator_show_random_seed(32,30,198)
+#         end
+#     end
 
-    benchmark.report("30k times, double size board hash crystal") do
-        30000.times do
-            Game.generate_game_state(32,30,198)
-        end
-    end
+#     benchmark.report("30k times, double size board hash crystal") do
+#         30000.times do
+#             Game.generate_game_state(32,30,198)
+#         end
+#     end
 
-    benchmark.report("30k times, double size board just hash") do
-        30000.times do
-            Game.generate_hash_nums(32,30,198)
-        end
-    end
+#     benchmark.report("30k times, double size board just hash") do
+#         30000.times do
+#             Game.generate_hash_nums(32,30,198)
+#         end
+#     end
 
-    puts '==============='
+#     puts '==============='
 
-    benchmark.report("30k times, 4x board reg") do
-        30000.times do
-            GameGenerator.board_generator_show_random_seed(64,30,396)
-        end
-    end
+#     benchmark.report("30k times, 4x board reg") do
+#         30000.times do
+#             GameGenerator.board_generator_show_random_seed(64,30,396)
+#         end
+#     end
 
-    benchmark.report("30k times, 4x board hash crystal") do
-        30000.times do
-            Game.generate_game_state(64,30,396)
-        end
-    end
+#     benchmark.report("30k times, 4x board hash crystal") do
+#         30000.times do
+#             Game.generate_game_state(64,30,396)
+#         end
+#     end
 
-    benchmark.report("30k times, 4x board just hash") do
-        30000.times do
-            Game.generate_hash_nums(64,30,396)
-        end
-    end
-end
+#     benchmark.report("30k times, 4x board just hash") do
+#         30000.times do
+#             Game.generate_hash_nums(64,30,396)
+#         end
+#     end
+# end
