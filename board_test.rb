@@ -83,6 +83,7 @@ class Game
     
             #top left corner
         game_state[0] = {
+            #linked tiles should go to all adjacent tiles
             :linked_tiles => [1,width],
             :uncovered => false
         }
