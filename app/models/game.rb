@@ -20,12 +20,12 @@ class Game < ApplicationRecord
         return game_state
     end
 
-    def click(position)
+    def click(game_board,position)
         self.game_state[position] = true
         self.reveal_other_tiles(position)
     end
 
-    def reveal_other_tiles(position)
+    def reveal_other_tiles(game_board,position)
         
     end
 end
