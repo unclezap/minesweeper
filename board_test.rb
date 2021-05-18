@@ -17,8 +17,20 @@ class Game
 
     # def self.generate_game_state_correct(height, width, mines, ref_array)
 
+    def convert_coord_to_arr(y_pos, x_pos, width) {
+    # def convert_coord_to_arr(y_pos, x_pos) {
+    #     return y_pos * self.board.width + x_pos
+        return y_pos * width + x_pos
+    }
+
+    def click(position) {
+        
+    }
+
         # puts ref_array
     def self.generate_game_state(height, width, mines)
+
+        # seed = self.board.seed
         seed = Random.new_seed
         # seed = 3
         ref_array = self.generate_ref_array(height, width, mines).shuffle(random: Random.new(seed))
