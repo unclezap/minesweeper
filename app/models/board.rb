@@ -109,14 +109,6 @@ class Board < ApplicationRecord
         return board
     end
 
-    # private
-
-    # def mine_maximum
-    #     if num_mines > width * height
-    #         self.errors.add(:num_mines, "too many mines")
-    #     end
-    # end
-
     private
 
     def reasonable_dimensions
