@@ -112,7 +112,7 @@ class Board < ApplicationRecord
     private
 
     def mine_maximum
-        binding.pry
+        .pry
         if num_mines > width * height
             errors.add(:num_mines, "too many mines")
         end

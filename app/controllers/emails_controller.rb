@@ -3,7 +3,6 @@ class EmailsController < ApplicationController
 
   def generate
     @sign_up
-    binding.pry
   end
 
   # GET /emails or /emails.json
