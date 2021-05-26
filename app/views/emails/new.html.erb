@@ -1,5 +1,11 @@
 <h1>Generate a New Minesweeper Board</h1>
 
+<% @email.errors.each do |type, msg| %>
+    <b><%= msg %></b>
+  <br>
+  <br>
+<% end %>
+
 <%= form_for @email do |f| %>
     What is your email address? <%= f.text_field :address %>
     <br>

@@ -1,7 +1,8 @@
 class Board < ApplicationRecord
     belongs_to :email
 
-    validates :name, :width, :height, :num_mines, :presence => true
+    validates_presence_of :name, :message => "You must name your board."
+    validate :reasonable_dimensions
 
     # replace width with height
     # replace length with width
@@ -110,10 +111,32 @@ class Board < ApplicationRecord
 
     private
 
-    def mine_maximum
-        binding.pry
-        if num_mines > width * height
-            errors.add(:num_mines, "too many mines")
+    def reasonable_dimensions
+
+        if !self.width
+            self.errors.add(:width, "You must specify a width.")
+        elsif self.width <= 0
+            self.errors.add(:width, "Width must be greater than zero.")
         end
+
+        if !self.height
+            self.errors.add(:height, "You must specify a height.")
+        elsif self.height <= 0
+            self.errors.add(:height, "Height must be greater than zero.")
+        end
+
+        if !self.num_mines
+            self.errors.add(:num_mines, "You must specify a number of mines.")
+        else
+            if self.num_mines <= 0
+                self.errors.add(:num_mines, "You cannot have negative mines.")
+            end
+
+            if !!self.width && !!self.height && self.num_mines > self.width * self.height
+                self.errors.add(:num_mines, "You cannot have more mines than tiles.")
+            end
+        end
+
+        
     end
 end
