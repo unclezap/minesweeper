@@ -132,7 +132,7 @@ class Board < ApplicationRecord
                 self.errors.add(:num_mines, "You cannot have negative mines.")
             end
 
-            if self.num_mines > self.width * self.height
+            if !!self.width && !!self.height && self.num_mines > self.width * self.height
                 self.errors.add(:num_mines, "You cannot have more mines than tiles.")
             end
         end
