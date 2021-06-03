@@ -4,7 +4,9 @@
   <strong>Board Name: <%= @board.name %></strong>
 </p>
 
-<%= link_to boards_path do %>
+Click the tile to play the game: 
+<br>
+<%= link_to game_path(@game) do %>
   <% image_tag "clicked_tile_0.png" %>
 <% end %>
 

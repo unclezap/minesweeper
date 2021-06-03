@@ -32,7 +32,7 @@ class Game
     end
 
     # def click(position) {
-    def self.uncover(tiles, game_state) 
+    def self.uncover(tiles, game_state)
         if tiles.empty?
             return game_state
         end
@@ -51,10 +51,10 @@ class Game
             end
         end
 
+        #game_state will be an attribute of the game model, so will not need to pass it through over and over
         uncover(to_uncover_arr, game_state)
     end
 
-        # puts ref_array
     def self.generate_game_state(height, width, mines)
 
         # seed = self.board.seed
@@ -83,7 +83,7 @@ class Game
     
             #top left corner
         game_state[0] = {
-            #linked tiles should go to all adjacent tiles
+            #linked tiles should go to all adjacent tiles - fix
             :linked_tiles => [1,width],
             :uncovered => false
         }

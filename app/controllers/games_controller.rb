@@ -8,6 +8,8 @@ class GamesController < ApplicationController
 
   # GET /games/1 or /games/1.json
   def show
+    binding.pry
+
   end
 
   # GET /games/new
@@ -64,6 +66,6 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:won_game, :board_id, :board_state)
+      params.require(:game).permit(:won_game, :board_id, :board_state, boards_attributes: [:board_id, :seed])
     end
 end
