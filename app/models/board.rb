@@ -4,8 +4,6 @@ class Board < ApplicationRecord
     validates_presence_of :name, :message => "You must name your board."
     validate :reasonable_dimensions
 
-    # replace width with height
-    # replace length with width
     #Creates an array of tiles with mines randomly distributed that will be transformed into the game board
     #Mines are represented by 9s
     def ref_array_generator
@@ -108,7 +106,7 @@ class Board < ApplicationRecord
     
         return board
     end
-
+#comment
     private
 
     def reasonable_dimensions
